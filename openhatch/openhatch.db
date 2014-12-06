@@ -1,0 +1,324 @@
+-- MySQL dump 10.13  Distrib 5.5.38, for debian-linux-gnu (x86_64)
+--
+-- Host: localhost    Database: openhatch
+-- ------------------------------------------------------
+-- Server version	5.5.38-0ubuntu0.14.04.1
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `admin`
+--
+
+DROP TABLE IF EXISTS `admin`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `admin` (
+  `a_id` int(11) NOT NULL AUTO_INCREMENT,
+  `lname` varchar(25) DEFAULT NULL,
+  `fname` varchar(25) DEFAULT NULL,
+  `email` varchar(50) NOT NULL,
+  `expertise` varchar(50) DEFAULT NULL,
+  `project` int(11) DEFAULT NULL,
+  PRIMARY KEY (`a_id`),
+  UNIQUE KEY `a_id` (`a_id`),
+  KEY `lname` (`lname`),
+  KEY `fname` (`fname`),
+  KEY `email` (`email`),
+  KEY `project` (`project`),
+  CONSTRAINT `admin_ibfk_1` FOREIGN KEY (`lname`) REFERENCES `people` (`lname`),
+  CONSTRAINT `admin_ibfk_2` FOREIGN KEY (`fname`) REFERENCES `people` (`name`),
+  CONSTRAINT `admin_ibfk_3` FOREIGN KEY (`email`) REFERENCES `people` (`email`),
+  CONSTRAINT `admin_ibfk_4` FOREIGN KEY (`project`) REFERENCES `projects` (`proj_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `admin`
+--
+
+LOCK TABLES `admin` WRITE;
+/*!40000 ALTER TABLE `admin` DISABLE KEYS */;
+INSERT INTO `admin` VALUES (3,'Timm','Alshia','Alshia.timm','astrophysics',6),(4,'Lard','Adriana','adriana.lard@gmail.com','astrophysics',1),(5,'Gamgee','Samwise','gamgee.samwise@gmail.com','astrophysics',5),(6,'Fairfax','Estefana','estefana.fairfax@gmail.com','observatory janitorial services',2),(7,'Rossiter','Tai','tai.rossiter@gmail.com','obsequiousness',3);
+/*!40000 ALTER TABLE `admin` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `events`
+--
+
+DROP TABLE IF EXISTS `events`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `events` (
+  `e_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `date` datetime DEFAULT NULL,
+  `location` varchar(50) DEFAULT NULL,
+  `poc` varchar(50) DEFAULT NULL,
+  `topic` varchar(50) DEFAULT NULL,
+  `attendance` varchar(10) DEFAULT NULL,
+  `attachments` blob,
+  `description` text,
+  PRIMARY KEY (`e_id`),
+  UNIQUE KEY `e_id` (`e_id`),
+  KEY `poc` (`poc`),
+  CONSTRAINT `events_ibfk_1` FOREIGN KEY (`poc`) REFERENCES `people` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=105 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `events`
+--
+
+LOCK TABLES `events` WRITE;
+/*!40000 ALTER TABLE `events` DISABLE KEYS */;
+INSERT INTO `events` VALUES (1,'Biology Related Projects','2014-12-06 12:23:24','EPS 232','marya.sisk@gmail.com','Biology','37',NULL,'Explore the brain through a new look at the possibility of firing neurons with circuits'),(2,'Soccer','2014-12-06 12:23:41','EPS 108','rodrigo.belizaire@gmail.com','ROBOTS','2',NULL,'Learn about the future of soccer using androids!'),(3,'Big Balloons','2014-12-06 12:23:49','Roskie Fields','moose.bullwinkle@gmail.com','Space','13',NULL,'Explore space through weather balloons!'),(5,'How to Space','2014-12-06 12:22:58','EPS 254','marya.sisk@gmail.com','Space',NULL,NULL,'Basic instruction on what is in space, how big is space, etc.'),(6,'Water and Space','2014-12-06 12:24:14','Gym','Domingo.Lymon@gmail.com','Space','33',NULL,'Come learn how being in water is similar to being in space AND play some water polo!'),(101,'Space Rocks','2014-12-06 12:59:43','Cocoa Beach','marya.sisk@gmail.com','Geology','34',NULL,'Come to learn about why rocks are in space and why this is the best thing ever!'),(102,'Earth Rocks','2014-12-06 13:03:35','EPS 103','rodrigo.belizaire@gmail.com','Geology','24',NULL,'This event will detail the upcoming project Open Hatch will manage in efforts to create more realism for Jurassic World!'),(103,'Pizza Party','2014-01-01 14:00:00','Roberts 101','paradiso@aol.com','Fun',NULL,NULL,'Come for a delicious combination of pizzas that are all Hawaiian.'),(104,'Robot Fights','2014-01-08 16:00:00','AJM 101','bobbi.dougan@yahoo.com','Robotics',NULL,NULL,'A battle royale between robots created by members of Open Hatch and the community alike.');
+/*!40000 ALTER TABLE `events` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `interests`
+--
+
+DROP TABLE IF EXISTS `interests`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `interests` (
+  `i_id` int(11) NOT NULL AUTO_INCREMENT,
+  `part_id` int(11) NOT NULL,
+  `interest` varchar(50) NOT NULL,
+  PRIMARY KEY (`i_id`),
+  UNIQUE KEY `i_id` (`i_id`),
+  KEY `part_id` (`part_id`),
+  CONSTRAINT `interests_ibfk_1` FOREIGN KEY (`part_id`) REFERENCES `participants` (`part_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `interests`
+--
+
+LOCK TABLES `interests` WRITE;
+/*!40000 ALTER TABLE `interests` DISABLE KEYS */;
+INSERT INTO `interests` VALUES (1,4,'Protecting the Great White North'),(2,2,'Underwater basket weaving'),(3,1,'BRAINS'),(4,3,'Neural Engineering'),(5,6,'Dancing with alien life'),(6,5,'Lasers');
+/*!40000 ALTER TABLE `interests` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `participants`
+--
+
+DROP TABLE IF EXISTS `participants`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `participants` (
+  `part_id` int(11) NOT NULL AUTO_INCREMENT,
+  `lname` varchar(25) DEFAULT NULL,
+  `fname` varchar(25) DEFAULT NULL,
+  `email` varchar(50) NOT NULL,
+  PRIMARY KEY (`part_id`),
+  UNIQUE KEY `part_id` (`part_id`),
+  KEY `lname` (`lname`),
+  KEY `fname` (`fname`),
+  KEY `email` (`email`),
+  CONSTRAINT `participants_ibfk_1` FOREIGN KEY (`lname`) REFERENCES `people` (`lname`),
+  CONSTRAINT `participants_ibfk_2` FOREIGN KEY (`fname`) REFERENCES `people` (`name`),
+  CONSTRAINT `participants_ibfk_3` FOREIGN KEY (`email`) REFERENCES `people` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `participants`
+--
+
+LOCK TABLES `participants` WRITE;
+/*!40000 ALTER TABLE `participants` DISABLE KEYS */;
+INSERT INTO `participants` VALUES (1,'Sisk','Marya','marya.sisk@gmail.com'),(2,'Baggins','Frodo','baggins.frodo@gmail.com'),(3,'Lard','Adriana','adriana.lard@gmail.com'),(4,'Doright','Dudley','doright.dudley@gmail.com'),(5,'Fenswick','Inspector','fenswick.inspector@gmail.com'),(6,'Fenswick','Nell','fenswick.nell@gmail.com');
+/*!40000 ALTER TABLE `participants` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `people`
+--
+
+DROP TABLE IF EXISTS `people`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `people` (
+  `p_id` int(11) NOT NULL AUTO_INCREMENT,
+  `lname` varchar(25) DEFAULT NULL,
+  `name` varchar(25) DEFAULT NULL,
+  `email` varchar(50) NOT NULL,
+  PRIMARY KEY (`p_id`),
+  UNIQUE KEY `p_id` (`p_id`),
+  KEY `lname` (`lname`),
+  KEY `fname` (`name`),
+  KEY `email` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `people`
+--
+
+LOCK TABLES `people` WRITE;
+/*!40000 ALTER TABLE `people` DISABLE KEYS */;
+INSERT INTO `people` VALUES (1,'Villano','Portia','portia.villano@gmail.com'),(2,'Brinkley','Ngan','ngan.brinkley@gmail.com'),(3,'Zimny','Patrick','patrick.zimny1@gmail.com'),(50,'Blumberg','Priscila','priscila.blumberg@gmail.com'),(51,'Lard','Adriana','adriana.lard@gmail.com'),(52,'Crose','Lyla','lyla.crose@gmail.com'),(53,'Threadgill','Danette','danette.threadgill@gmail.com'),(54,'Lena','Rina','rina.lina@gmail.com'),(55,'Vasiliki','Lindsae','lindse.vasiliki@gmail.com'),(56,'Denson','Tami','tami.denson@gmail.com'),(57,'Rachel','Taina','taina.rachel@gmail.com'),(58,'Doright','Dudley','doright.dudley@gmail.com'),(59,'Zick','Temple','temple.zick@gmail.com'),(60,'Fuquay','Lee','lee.fuquay@gmail.com'),(61,'Moose','Bullwinkle','moose.bullwinkle@gmail.com'),(62,'Sisk','Marya','marya.sisk@gmail.com'),(63,'Brune','Prudence','prudence.brune@gmail.com'),(64,'Squirrel','Rocky','squirrel.rocky@gmail.com'),(65,'Atherton','Krystyna','krystyna.atherton@gmail.com'),(66,'Rossiter','Tai','tai.rossiter@gmail.com'),(67,'Hegland','Melaine','melaine.hegland@gmail.com'),(68,'Knipp','Fabiola','fabiola.knipp@ymail.com'),(69,'Baros','Lakendra','lakendra.baros@gmail.com'),(70,'Dougan','Bobbi','bobbi.dougan@yahoo.com'),(71,'Fenswick','Nell','fenswick.nell@gmail.com'),(72,'Wildes','Marcelo','marcelo.wildes@yahoo.com'),(73,'Fairfax','Estefana','estefana.fairfax@gmail.com'),(74,'Fenswick','Inspector','fenswick.inspector@gmail.com'),(75,'Delaune','Dayle','dayle.delaune2@yahoo.com'),(76,'Dale','Jesse','dale.jesse@gmail.com'),(77,'Kerstetter','Wally','wally.kerstetter@gmail.com'),(78,'Paradiso','Augusta','paradiso@aol.com'),(79,'Lymon','Domingo','domingo.lymon@gmail.com'),(80,'Barton','Samuel','samBarton@hotmail.com'),(81,'Fortin','Elenore','elenore.fortin@gmail.com'),(82,'Trudel','Robbyn','robbyn.trudel@gmail.com'),(83,'Gabriele','Lakiesha','lgabriele@hotmail.com'),(84,'Baggins','Frodo','baggins.frodo@gmail.com'),(85,'Fraga','Kala','kala.fraga@gmail.com'),(86,'Elfink','Anita','anita.elfink@live.com'),(87,'Levay','Dwayne','dwayne.levay@live.com'),(88,'Gamgee','Samwise','gamgee.samwise@gmail.com'),(89,'Dee','Lindsay','lindsay.dee@live.com'),(90,'Belizaire','Rodrigo','rodrigo.belizaire@gmail.com'),(91,'Timm','Alshia','Alshia.timm');
+/*!40000 ALTER TABLE `people` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `projects`
+--
+
+DROP TABLE IF EXISTS `projects`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `projects` (
+  `proj_id` int(11) NOT NULL AUTO_INCREMENT,
+  `project_name` varchar(100) NOT NULL,
+  `point_of_contact` varchar(50) NOT NULL,
+  `category` varchar(50) DEFAULT NULL,
+  `volunteers` int(11) DEFAULT NULL,
+  `organization` varchar(100) DEFAULT NULL,
+  `votes` int(11) DEFAULT NULL,
+  PRIMARY KEY (`proj_id`),
+  UNIQUE KEY `proj_id` (`proj_id`),
+  KEY `point_of_contact` (`point_of_contact`),
+  KEY `projects` (`proj_id`),
+  CONSTRAINT `projects_ibfk_1` FOREIGN KEY (`point_of_contact`) REFERENCES `people` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `projects`
+--
+
+LOCK TABLES `projects` WRITE;
+/*!40000 ALTER TABLE `projects` DISABLE KEYS */;
+INSERT INTO `projects` VALUES (1,'Neurons and Circuits','dale.jesse@gmail.com','Special Topics',15,'Bionic Inc.',NULL),(2,'Outer Space','kala.fraga@gmail.com','Special Topics',3,'NASA',NULL),(3,'Category: Space','elenore.fortin@gmail.com','Special Topics',6,'LunarFlight',NULL),(4,'Laser Blaster Programming','anita.elfink@live.com','special topics',NULL,'The Laser Blaster Foundation',NULL),(5,'The One Ring','gamgee.samwise@gmail.com','Special Topics',2,'MiddleEarth',NULL),(6,'Life on other planets','dwayne.levay@live.com','astrobiology',NULL,'SETI',NULL),(7,'Aerospace Technical Training','dwayne.levay@live.com','Special Topics',11,'SpaceTEC',NULL),(8,'Space Invaders','bobbi.dougan@yahoo.com','Special Topics',13,'CX2632',NULL),(9,'ROBOTS','moose.bullwinkle@gmail.com','Special Topics',42,'EM Corp.',NULL),(12,'Interstellar','kala.fraga@gmail.com','Space Travel',4,'NASA',15),(13,'Space Odyssey','Domingo.Lymon@gmail.com','Transportation',39,'SpaceX',14),(14,'GIF Database','dale.jesse@gmail.com','Humor',2,'cheezburger',3459);
+/*!40000 ALTER TABLE `projects` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `surveys`
+--
+
+DROP TABLE IF EXISTS `surveys`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `surveys` (
+  `s_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `date` datetime DEFAULT NULL,
+  `comment` text,
+  `rating` varchar(2) DEFAULT NULL,
+  `event` int(11) NOT NULL,
+  `proj_id` int(11) NOT NULL,
+  `p_id` int(11) NOT NULL,
+  PRIMARY KEY (`s_id`),
+  UNIQUE KEY `s_id` (`s_id`),
+  KEY `proj_id` (`proj_id`),
+  KEY `p_id` (`p_id`),
+  KEY `event` (`event`),
+  CONSTRAINT `surveys_ibfk_1` FOREIGN KEY (`proj_id`) REFERENCES `projects` (`proj_id`),
+  CONSTRAINT `surveys_ibfk_2` FOREIGN KEY (`p_id`) REFERENCES `people` (`p_id`),
+  CONSTRAINT `surveys_ibfk_3` FOREIGN KEY (`event`) REFERENCES `events` (`e_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `surveys`
+--
+
+LOCK TABLES `surveys` WRITE;
+/*!40000 ALTER TABLE `surveys` DISABLE KEYS */;
+INSERT INTO `surveys` VALUES (1,'Follow up','2014-12-06 12:30:41','I really thought this was a fun and informative event','10',1,6,55),(2,'Follow up','2014-12-06 12:34:20','it was ok','6',1,6,54),(3,'Follow up','2014-12-06 12:35:52','Soccer with robots is my most favoritest thing','8',2,9,83),(4,'Follow up','2014-12-06 12:37:20','Soccer with robots is my most favoritest thing','9',2,9,89),(5,'Follow up','2014-12-06 12:37:54','Soccer with robots is my most favoritest thing','9',2,9,87);
+/*!40000 ALTER TABLE `surveys` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `volunteers`
+--
+
+DROP TABLE IF EXISTS `volunteers`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `volunteers` (
+  `v_id` int(11) NOT NULL AUTO_INCREMENT,
+  `lname` varchar(25) DEFAULT NULL,
+  `fname` varchar(25) DEFAULT NULL,
+  `email` varchar(50) NOT NULL,
+  `expertise` varchar(50) DEFAULT NULL,
+  `project` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`v_id`),
+  UNIQUE KEY `v_id` (`v_id`),
+  KEY `lname` (`lname`),
+  KEY `fname` (`fname`),
+  KEY `email` (`email`),
+  CONSTRAINT `volunteers_ibfk_1` FOREIGN KEY (`lname`) REFERENCES `people` (`lname`),
+  CONSTRAINT `volunteers_ibfk_2` FOREIGN KEY (`fname`) REFERENCES `people` (`name`),
+  CONSTRAINT `volunteers_ibfk_3` FOREIGN KEY (`email`) REFERENCES `people` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `volunteers`
+--
+
+LOCK TABLES `volunteers` WRITE;
+/*!40000 ALTER TABLE `volunteers` DISABLE KEYS */;
+INSERT INTO `volunteers` VALUES (1,'Zimny','Patrick','patrick.zimny1@gmail.com','Technical','Laser Blaster Programming'),(2,'Sisk','Marya','marya.sisk@gmail.com','Biology','Neurons and Circuits'),(5,'Barton','Samuel','samBarton@hotmail.com','Curiosity','Life on other planets'),(7,'Trudel','Robbyn','robbyn.trudel@gmail.com','Electrical Engineering','ROBOTS'),(8,'Belizaire','Rodrigo','rodrigo.belizaire@gmail.com','Ability to trust','ROBOTS'),(9,'Belizaire','Rodrigo','rodrigo.belizaire@gmail.com','Ability to trust','Life on other planets'),(10,'Fortin','Elenore','elenore.fortin@gmail.com','Ability to trust','Life on other planets');
+/*!40000 ALTER TABLE `volunteers` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `worked_on`
+--
+
+DROP TABLE IF EXISTS `worked_on`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `worked_on` (
+  `wo_id` int(11) NOT NULL AUTO_INCREMENT,
+  `proj_id` int(11) DEFAULT NULL,
+  `p_id` int(11) NOT NULL,
+  PRIMARY KEY (`wo_id`),
+  UNIQUE KEY `wo_id` (`wo_id`),
+  KEY `proj_id` (`proj_id`),
+  KEY `p_id` (`p_id`),
+  CONSTRAINT `worked_on_ibfk_1` FOREIGN KEY (`proj_id`) REFERENCES `projects` (`proj_id`),
+  CONSTRAINT `worked_on_ibfk_2` FOREIGN KEY (`p_id`) REFERENCES `people` (`p_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `worked_on`
+--
+
+LOCK TABLES `worked_on` WRITE;
+/*!40000 ALTER TABLE `worked_on` DISABLE KEYS */;
+INSERT INTO `worked_on` VALUES (1,4,3),(2,1,62),(3,6,80),(4,9,82),(5,9,90),(6,6,90),(7,6,81);
+/*!40000 ALTER TABLE `worked_on` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2014-12-06 13:32:00
